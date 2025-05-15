@@ -4,7 +4,7 @@ $user = isset($_SESSION['user']);
 $admin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
 
-require_once(__DIR__ . '/../models/Product.php');
+require_once(__DIR__ . '/models/Product.php');
 
 $product = new Product();
 $products = $product->getAllProducts();
