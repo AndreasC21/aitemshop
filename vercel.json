@@ -2,6 +2,9 @@
   "functions": {
     "api/*.php": {
       "runtime": "vercel-php@0.7.3"
+    },
+    "api/controllers/*.php": {
+      "runtime": "vercel-php@0.7.3"
     }
   },
   "routes": [
@@ -23,10 +26,6 @@
     },
     {
       "src": "/search.php",
-      "dest": "/api/controllers/search.php"
-    },
-    {
-      "src": "/api/controllers/search.php",
       "dest": "/api/controllers/search.php"
     },
     {

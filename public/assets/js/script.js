@@ -35,7 +35,7 @@ $(document).ready(function () {
     let keyword = $(this).val();
     if (keyword.length >= 1) {
       $.ajax({
-        url: "/api/controllers/search.php",
+        url: "/search.php",
         method: "GET",
         data: { keyword: keyword },
         success: function (data) {
