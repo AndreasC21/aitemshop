@@ -22,20 +22,16 @@
       "dest": "/public/assets/css/output.css"
     },
     {
+      "src": "/script.js",
+      "dest": "/public/assets/js/script.js"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/public/assets/$1"
     },
     {
       "src": "/(.*)",
       "dest": "/public/$1"
-    },
-    {
-      "src": "/",
-      "dest": "/public/index.php"
-    },
-    {
-      "src": "/index.php",
-      "dest": "/public/index.php"
     },
     {
       "src": "/api/(.*)",
