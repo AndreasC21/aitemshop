@@ -4,11 +4,18 @@
       "runtime": "vercel-php@0.7.3"
     }
   },
-
   "routes": [
     {
       "src": "/",
       "dest": "/api/index.php"
+    },
+    {
+      "src": "/login.php",
+      "dest": "/api/login.php"
+    },
+    {
+      "src": "/controllers/(.*\\.php)",
+      "dest": "/api/controllers/$1"
     },
     {
       "src": "/output.css",

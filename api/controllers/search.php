@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/../../api/models/Product.php');
+require_once(__DIR__ . '/../models/Product.php');
 session_start();
 $darkMode = isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark';
 $user = isset($_SESSION['user']);
