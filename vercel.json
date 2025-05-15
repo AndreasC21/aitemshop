@@ -26,7 +26,7 @@
       "dest": "/api/controllers/search.php"
     },
     {
-      "src": "/controllers/search.php",
+      "src": "/api/controllers/search.php",
       "dest": "/api/controllers/search.php"
     },
     {
