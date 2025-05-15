@@ -31,12 +31,11 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Live search dengan dropdown
   $("#live-search").on("keyup", function () {
     let keyword = $(this).val();
     if (keyword.length >= 1) {
       $.ajax({
-        url: "/controllers/search.php",
+        url: "/api/controllers/search.php",
         method: "GET",
         data: { keyword: keyword },
         success: function (data) {
@@ -50,7 +49,6 @@ $(document).ready(function () {
     }
   });
 
-  // Klik di luar dropdown untuk menutupnya
   $(document).on("click", function (e) {
     if (
       !$(e.target).closest("#live-search").length &&
@@ -60,7 +58,6 @@ $(document).ready(function () {
     }
   });
 
-  // Fokus pada input search menampilkan dropdown jika ada hasil
   $("#live-search").on("focus", function () {
     if ($("#live-search-result").html().trim() !== "") {
       $("#search-results-dropdown").removeClass("hidden");
@@ -71,7 +68,7 @@ $(document).ready(function () {
     var sortBy = $(this).val();
 
     $.ajax({
-      url: "./controllers/sort.php",
+      url: "/api/controllers/sort.php",
       type: "GET",
       data: { sort: sortBy },
       success: function (data) {
@@ -87,7 +84,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#addButton").click(function () {
     $("#modalTitle").text("Tambah Produk");
-    $("#productForm").attr("action", "controllers/insert.php");
+    $("#productForm").attr("action", "/api/controllers/insert.php");
 
     $("#productId").val("");
     $("#oldImg").val("");
@@ -103,7 +100,7 @@ $(document).ready(function () {
     let item = $(this).data("item");
 
     $("#modalTitle").text("Edit Produk");
-    $("#productForm").attr("action", "controllers/update.php");
+    $("#productForm").attr("action", "/api/controllers/update.php");
 
     $("#productId").val(item.id);
     $("#oldImg").val(item.img);
@@ -125,7 +122,7 @@ $(document).ready(function () {
     $("#buyId").val(item.id);
     $("#buyName").html(`${item.name}`);
     $("#buyModal").removeClass("hidden");
-    $("#buyForm").attr("action", "controllers/payment.php");
+    $("#buyForm").attr("action", "/api/controllers/payment.php");
   });
 
   $("#closeBuyModal").click(function () {
@@ -156,6 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function () {
   $("#messageOk").click(function () {
     $("#messageModal").addClass("hidden");
-    $.post("controllers/clearMessage.php");
+    $.post("/api/controllers/clearMessage.php");
   });
 });

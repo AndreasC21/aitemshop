@@ -17,7 +17,7 @@ if (isset($_GET['keyword'])) {
         <div class="grid grid-cols-1 gap-4">
             <?php while ($item = $result->fetch_assoc()): ?>
                 <div class="flex border-b border-gray-200 dark:border-gray-700 pb-2 last:border-0">
-                    <img src="./uploads/img/<?= htmlspecialchars($item['img']) ?>" class="w-16 h-16 object-cover rounded-md mr-3">
+                    <img src="/uploads/img/<?= htmlspecialchars($item['img']) ?>" class="w-16 h-16 object-cover rounded-md mr-3">
                     <div class="flex flex-col flex-grow">
                         <h3 class="font-bold text-black dark:text-white"><?= htmlspecialchars($item['name']) ?></h3>
                         <p class="text-black dark:text-white">Rp<?= number_format($item['price'], 0, ',', '.') ?></p>
