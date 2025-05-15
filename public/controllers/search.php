@@ -1,6 +1,6 @@
 <?php
-require_once "../models/Product.php";
-session_start(); // Tambahkan session_start() jika belum ada
+require_once(__DIR__ . '/../models/Product.php');
+session_start();
 $darkMode = isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark';
 $user = isset($_SESSION['user']);
 $admin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
