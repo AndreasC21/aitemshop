@@ -45,6 +45,10 @@
       "dest": "/api/controllers/loginController.php"
     },
     {
+      "src": "/logout.php",
+      "dest": "/api/controllers/logout.php"
+    },
+    {
       "src": "/output.css",
       "dest": "/public/assets/css/output.css"
     },

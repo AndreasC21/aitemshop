@@ -207,7 +207,7 @@ $(document).ready(function () {
   $("#logoutButton").on("click", function (e) {
     e.preventDefault();
     showConfirmModal("Apakah anda yakin ingin logout?", function () {
-      window.location.href = "controllers/logout.php";
+      window.location.href = "/logout.php";
     });
   });
 });
@@ -216,6 +216,6 @@ $(document).on("click", ".deleteButton", function () {
   let item = $(this).data("item");
   const id = item.id;
   showConfirmModal("Apakah anda yakin akan menghapus produk ini?", function () {
-    window.location.href = `controllers/delete.php?id=${id}`;
+    window.location.href = `/controllers/delete.php?id=${id}`;
   });
 });
