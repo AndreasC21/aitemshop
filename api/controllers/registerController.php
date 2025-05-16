@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__ . '/../models/Product.php');
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = new User();
     $username = $_POST['name'];
@@ -14,26 +16,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     #cek apakah username belum pernah dipakai
     if ($user->checkUsername($username)) {
-        echo "<script>alert('Username sudah digunakan!'); window.history.back();</script>";
-        return false;
+        $_SESSION['message'] = "Username sudah digunakan!";
+        header("Location: /register.php");
+        exit();
     }
 
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-
     $user->createUser($username, $passwordHash);
-    header("Location: ../login.php");
+    $_SESSION['message'] = "Registrasi berhasil! Silakan login";
+    header("Location: /login.php");
     exit();
 }
 
 function checkPassword($password, $passwordConfirm) {
     if ($password !== $passwordConfirm) {
-        echo "<script>alert('Password tidak sama!'); window.history.back();</script>";
-        return false;
+        $_SESSION['message'] = "Password tidak sama!";
+        header("Location: /register.php");
+        exit();
     }
     if (strlen($password) < 8) {
-        echo "<script>alert('Password minimal 8 karakter!'); window.history.back();</script>";
-        return false;
+        $_SESSION['message'] = "Password minimal 8 karakter!";
+        header("Location: /register.php");
+        exit();
     }
     return true;
 }

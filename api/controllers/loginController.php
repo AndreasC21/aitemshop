@@ -6,26 +6,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['name'];
     $password = $_POST['password'];
 
+    session_start();
+
     #cek username ada di database
     $data = $user->getUserByUsername($username);
     if(!$data) {
-        echo "<script>alert('Username atau password salah!'); window.history.back();</script>";
+        $_SESSION['message'] = "Username atau password salah!";
+        header("Location: /login.php");
         exit();
     }
 
     #cek apakah password benar
     if(password_verify($password, $data['password'])) {
-       session_start();
        if ($data['admin'] == '1') {
            $_SESSION['role'] = 'admin';
        } else {
            $_SESSION['role'] = 'user';
        }
        $_SESSION['user'] = $data['name'];
-       echo "<script>window.location.href = '../index.php';</script>";
+       header("Location: /index.php");
        exit();
     } else {
-        echo "<script>alert('Username atau password salah!'); window.history.back();</script>";
+        $_SESSION['message'] = "Username atau password salah!";
+        header("Location: /login.php");
         exit();
     }
 }

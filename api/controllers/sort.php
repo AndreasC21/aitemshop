@@ -54,7 +54,7 @@ if (isset($_GET['sort'])) {
                     <div class=" <?= $user ? '' : 'hidden' ?> flex">
                         <li class="<?= $admin ? '' : 'hidden' ?> flex">
                           <button class="editButton bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300   ease-in-out mr-4" data-item='<?= json_encode($item) ?>'><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                          <button onclick="if(confirm('Apakah anda yakin akan menghapus produk ini?')) { location.href='controllers/delete.php? id=<?= $item['id']?>'; }" class="bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300     ease-in-out"><i class="fa-solid fa-trash"></i> Hapus</button>
+                          <button class="deleteButton bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300     ease-in-out"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </li>
                         <li class="<?= $admin ? 'hidden' : '' ?> flex">
                           <button class="editButton bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300   ease-in-out mr-4" data-item='<?= json_encode($item) ?>'><i class="fa-solid fa-bag-shopping"></i> Beli</button>

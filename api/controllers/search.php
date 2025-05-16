@@ -17,7 +17,7 @@ if (isset($_GET['keyword'])) {
         <div class="grid grid-cols-1 gap-4">
             <?php while ($item = $result->fetch_assoc()): ?>
                 <div class="flex border-b border-gray-200 dark:border-gray-700 pb-2 last:border-0">
-                    <img src="/uploads/img/<?= htmlspecialchars($item['img']) ?>" class="w-16 h-16 object-cover rounded-md mr-3">
+                    <img src="./uploads/img/<?= htmlspecialchars($item['img']) ?>" class="w-16 h-16 object-cover rounded-md mr-3">
                     <div class="flex flex-col flex-grow">
                         <h3 class="font-bold text-black dark:text-white"><?= htmlspecialchars($item['name']) ?></h3>
                         <p class="text-black dark:text-white">Rp<?= number_format($item['price'], 0, ',', '.') ?></p>
@@ -27,7 +27,7 @@ if (isset($_GET['keyword'])) {
                                     <button class="editButton bg-blue-500 text-white rounded-md px-2 py-1 text-sm hover:bg-blue-600 transition  duration-300 ease-in-out mr-2" data-item='<?= json_encode($item) ?>'>
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
-                                    <button onclick="if(confirm('Apakah anda yakin akan menghapus produk ini?')) { location.href='controllers/  delete.php?id=<?= $item['id']?>'; }" class="bg-red-500 text-white rounded-md px-2 py-1 text-sm    hover:bg-red-600 transition duration-300 ease-in-out">
+                                    <button class="deleteButton bg-red-500 text-white rounded-md px-2 py-1 text-sm    hover:bg-red-600 transition duration-300 ease-in-out">
                                         <i class="fa-solid fa-trash"></i> Hapus
                                     </button>
                                 </li>
