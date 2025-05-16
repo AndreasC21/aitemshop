@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        $_SESSION['user'] = $data['name'];
        header("Location: /index.php");
        exit();
+       
     } else {
         $_SESSION['message'] = "Username atau password salah!";
         header("Location: /login.php");
