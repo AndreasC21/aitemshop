@@ -54,20 +54,28 @@ $banners = [
 </head>
 <body class="<?= $darkMode ? 'dark' : '' ?> bg-blue-300 font-gabarito text-black dark:bg-blue-950 dark:text-white transition duration-300 ease-in-out">
 
-<!-- message modal -->
-<div id="messageModal" class="fixed inset-0 bg-black/50 flex items-center justify-center <?= $message ? '' : 'hidden' ?> z-50">
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-[90%] max-w-md">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-bold" id="messageTitle">Notifikasi</h2>
+    <!-- message modal -->
+    <div id="messageModal" class="fixed inset-0 bg-black/50 flex items-center   justify-center <?= $message ? '' : 'hidden' ?> z-50">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-[90%] max-w-md">
+        <div id="messageContent" class="flex items-center justify-center my-4">
+            <p class="text-xl font-bold text-center"><?= htmlspecialchars($message) ?></p>
+        </div>
+        <div class="flex justify-center">
+          <button id="messageOk" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2  rounded-md">OK</button>
+        </div>
+      </div>
     </div>
-    <div id="messageContent" class="mb-6">
-        <p><?= htmlspecialchars($message) ?></p>
+
+    <!-- confirm modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-black/50 flex items-center   justify-center hidden z-50">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-[90%] max-w-md">
+        <p id="confirmMessage" class="text-xl font-bold text-center my-4"></p>
+        <div class="flex justify-center gap-2">
+          <button id="cancelConfirm" class="bg-gray-500 hover:bg-gray-600 text-white px-4   py-2 rounded-md">Batal</button>
+          <button id="okConfirm" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2    rounded-md">Ya</button>
+        </div>
+      </div>
     </div>
-    <div class="flex justify-end">
-      <button id="messageOk" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">OK</button>
-    </div>
-  </div>
-</div>
 
     <!-- navigation bar -->
     <nav class="flex my-5 items-center justify-between mx-20">
@@ -95,7 +103,7 @@ $banners = [
                 <p class="mr-4">Halo, <?= htmlspecialchars($_SESSION['user']) ?>!</p>
             </div>
             <div class="<?= $user ? '' : 'hidden' ?>">
-                <button onclick="if(confirm('Apakah anda yakin ingin logout?')) { location.href='controllers/logout.php'; }" class="bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300 ease-in-out">Logout</button>
+                <button id="logoutButton" class="bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300 ease-in-out">Logout</button>
             </div>
             <div class="<?= $user ? 'hidden' : '' ?>">
                 <button onclick="location.href='login.php';" class="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300 ease-in-out">Login</button>
@@ -152,6 +160,16 @@ $banners = [
       </div>
     </div>
 
+    <!-- banner section -->
+<div class="banner-container relative flex justify-center items-center my-10 h-64">
+    <?php foreach($banners as $index => $banner): ?>
+        <img src="<?= $banner['image'] ?>" 
+             alt="<?= $banner['alt'] ?>" 
+             class="banner w-2/3 max-w-3xl rounded-3xl shadow-xl transition-all duration-500 <?= $index === 0 ? 'opacity-100' : 'opacity-0 hidden' ?>"
+        >
+    <?php endforeach; ?>
+</div>
+
 
 <!-- action section -->
     <div class="flex my-5 items-center justify-between mx-20">
@@ -168,16 +186,9 @@ $banners = [
        </div>
     </div>
 
- <!-- banner section -->
-    <div class="banner-container flex align-middle justify-center flex-wrap">
-        <?php foreach($banners as $index => $banner): ?>
-            <img src="<?= $banner['image'] ?>" alt="<?= $banner['alt'] ?>" class="banner w-1/2 absolute opacity-0 transition-opacity duration-1000  drop-shadow-sm drop-shadow-black rounded-3xl">
-        <?php endforeach; ?>
-    </div>
-
 
     <!-- item section -->
-    <div class="flex align-middle justify-center flex-wrap mt-70" id="product-list">
+    <div class="flex align-middle justify-center flex-wrap" id="product-list">
         <?php
             foreach($products as $item)  :
         ?>
@@ -196,10 +207,10 @@ $banners = [
                     <div class=" <?= $user ? '' : 'hidden' ?> flex">
                         <li class="<?= $admin ? '' : 'hidden' ?> flex">
                           <button class="editButton bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300   ease-in-out mr-4" data-item='<?= json_encode($item) ?>'><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                          <button onclick="if(confirm('Apakah anda yakin akan menghapus produk ini?')) { location.href='controllers/delete.php? id=<?= $item['id']?>'; }" class="bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300     ease-in-out"><i class="fa-solid fa-trash"></i> Hapus</button>
+                          <button class="deleteButton bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300     ease-in-out" data-item='<?= json_encode($item) ?>'><i class="fa-solid fa-trash"></i> Hapus</button>
                         </li>
                         <li class="<?= $admin ? 'hidden' : '' ?> flex">
-                            <button class="buyButton  rounded-md px-4 py-2  transition duration-300 ease-in-out mr-4 <?= $item['stock']> 0 ?    'bg-blue-500 hover:bg-blue-600 text-white cursor-pointer' : 'bg-gray-200 text-gray-400 cursor-not-allowed' ?>" 
+                            <button class="buyButton rounded-md px-4 py-2  transition duration-300 ease-in-out mr-4 <?= $item['stock']> 0 ?    'bg-blue-500 hover:bg-blue-600 text-white cursor-pointer' : 'bg-gray-200 text-gray-400 cursor-not-allowed' ?>" 
                                 data-item='<?= json_encode($item) ?>' 
                                 <?= $item['stock'] > 0 ? '' : 'disabled' ?>>
                                 <i class="fa-solid fa-bag-shopping"></i> Beli

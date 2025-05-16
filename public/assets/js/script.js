@@ -8,6 +8,7 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
+//mekanisme dark/light mode
 $(document).ready(function () {
   $("#to-dark-icon").click(function () {
     $("body").addClass("dark");
@@ -30,12 +31,13 @@ $(document).ready(function () {
   });
 });
 
+//mekenisme pencarian
 $(document).ready(function () {
   $("#live-search").on("keyup", function () {
     let keyword = $(this).val();
     if (keyword.length >= 1) {
       $.ajax({
-        url: "/search.php",
+        url: "controllers/search.php",
         method: "GET",
         data: { keyword: keyword },
         success: function (data) {
@@ -64,11 +66,12 @@ $(document).ready(function () {
     }
   });
 
+  //mekanisme filter
   $("#sort-filter").on("change", function () {
     var sortBy = $(this).val();
 
     $.ajax({
-      url: "/api/controllers/sort.php",
+      url: "./controllers/sort.php",
       type: "GET",
       data: { sort: sortBy },
       success: function (data) {
@@ -81,10 +84,11 @@ $(document).ready(function () {
   });
 });
 
+//mekanisme tambah/edit/buy produk
 $(document).ready(function () {
   $("#addButton").click(function () {
     $("#modalTitle").text("Tambah Produk");
-    $("#productForm").attr("action", "/api/controllers/insert.php");
+    $("#productForm").attr("action", "controllers/insert.php");
 
     $("#productId").val("");
     $("#oldImg").val("");
@@ -100,7 +104,7 @@ $(document).ready(function () {
     let item = $(this).data("item");
 
     $("#modalTitle").text("Edit Produk");
-    $("#productForm").attr("action", "/api/controllers/update.php");
+    $("#productForm").attr("action", "controllers/update.php");
 
     $("#productId").val(item.id);
     $("#oldImg").val(item.img);
@@ -122,7 +126,7 @@ $(document).ready(function () {
     $("#buyId").val(item.id);
     $("#buyName").html(`${item.name}`);
     $("#buyModal").removeClass("hidden");
-    $("#buyForm").attr("action", "/api/controllers/payment.php");
+    $("#buyForm").attr("action", "controllers/payment.php");
   });
 
   $("#closeBuyModal").click(function () {
@@ -130,29 +134,88 @@ $(document).ready(function () {
   });
 });
 
-//mekanisme banner
+// mekanisme banner
 document.addEventListener("DOMContentLoaded", function () {
   const banners = document.querySelectorAll(".banner");
+  if (banners.length === 0) return;
+
   let currentIndex = 0;
 
-  banners[currentIndex].classList.remove("opacity-0");
-  banners[currentIndex].classList.add("opacity-100");
+  banners.forEach((banner) => {
+    banner.classList.add("hidden", "opacity-0");
+    banner.classList.remove("opacity-100");
+  });
 
-  setInterval(() => {
+  banners[currentIndex].classList.remove("hidden");
+
+  setTimeout(() => {
+    banners[currentIndex].classList.add("opacity-100");
+    banners[currentIndex].classList.remove("opacity-0");
+  }, 50);
+
+  function rotateToNextBanner() {
     banners[currentIndex].classList.remove("opacity-100");
     banners[currentIndex].classList.add("opacity-0");
 
-    currentIndex = (currentIndex + 1) % banners.length;
+    setTimeout(() => {
+      banners[currentIndex].classList.add("hidden");
+      currentIndex = (currentIndex + 1) % banners.length;
 
-    banners[currentIndex].classList.remove("opacity-0");
-    banners[currentIndex].classList.add("opacity-100");
-  }, 4000);
+      banners[currentIndex].classList.remove("hidden");
+
+      setTimeout(() => {
+        banners[currentIndex].classList.remove("opacity-0");
+        banners[currentIndex].classList.add("opacity-100");
+      }, 50);
+    }, 500);
+  }
+
+  setInterval(rotateToNextBanner, 4000);
 });
 
-//mekanisme modal message
+//mekanisme menghapus message
 $(document).ready(function () {
   $("#messageOk").click(function () {
     $("#messageModal").addClass("hidden");
-    $.post("/api/controllers/clearMessage.php");
+    $.post("controllers/clearMessage.php");
+  });
+});
+
+//mekanisme pesan konfirmasi
+function showConfirmModal(message, onConfirm) {
+  $("#confirmMessage").text(message);
+
+  $("#confirmModal").removeClass("hidden");
+
+  $("#okConfirm")
+    .off("click")
+    .on("click", function () {
+      $("#confirmModal").addClass("hidden");
+      if (typeof onConfirm === "function") {
+        onConfirm();
+      }
+    });
+
+  $("#cancelConfirm")
+    .off("click")
+    .on("click", function () {
+      $("#confirmModal").addClass("hidden");
+    });
+}
+
+$(document).ready(function () {
+  $("#logoutButton").on("click", function (e) {
+    e.preventDefault();
+    showConfirmModal("Apakah anda yakin ingin logout?", function () {
+      window.location.href = "controllers/logout.php";
+    });
+  });
+});
+
+$(document).on("click", ".deleteButton", function () {
+  let item = $(this).data("item");
+  const id = item.id;
+  showConfirmModal("Apakah anda yakin akan menghapus produk ini?", function () {
+    window.location.href = `controllers/delete.php?id=${id}`;
   });
 });

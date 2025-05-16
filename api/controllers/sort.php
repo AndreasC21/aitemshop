@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../models/Product.php";
+require_once(__DIR__ . '/../models/Product.php');
 
 $user = isset($_SESSION['user']);
 $admin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';

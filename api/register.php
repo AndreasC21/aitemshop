@@ -4,7 +4,7 @@ if (isset($_SESSION['user'])) {
     header("Location: index.php");
     exit();
 }
-
+$message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
 $darkMode = isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark';
 ?>
 
@@ -42,6 +42,20 @@ $darkMode = isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark';
             <i class="fa-solid fa-sun"></i>
         </div>
     </nav>
+
+    <!-- message modal -->
+    <div id="messageModal" class="fixed inset-0 bg-black/50 flex items-center justify-center <?= $message ? '' : 'hidden' ?> z-50">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-[90%] max-w-md">
+        <div id="messageContent" class="flex items-center justify-center my-4">
+            <p class="text-xl font-bold text-center"><?= htmlspecialchars($message) ?></p>
+        </div>
+        <div class="flex justify-center">
+          <button id="messageOk" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- form register section -->
     <div class="flex flex-col pt-10">
         <div class="flex align-middle justify-center flex-wrap">
         <div class="background-item <?= $darkMode ? 'dark' : '' ?> bg-blue-100 dark:bg-gray-800 shadow-lg rounded-lg p-5 m-5 transition duration-300 ease-in-out">

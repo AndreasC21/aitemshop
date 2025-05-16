@@ -29,6 +29,18 @@
       "dest": "/api/controllers/search.php"
     },
     {
+      "src": "/sort.php",
+      "dest": "/api/controllers/sort.php"
+    },
+    {
+      "src": "/loginController.php",
+      "dest": "/api/controllers/loginController.php"
+    },
+    {
+      "src": "/registerController.php",
+      "dest": "/api/controllers/loginController.php"
+    },
+    {
       "src": "/output.css",
       "dest": "/public/assets/css/output.css"
     },
